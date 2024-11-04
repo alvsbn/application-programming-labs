@@ -5,8 +5,8 @@ from parser import parse
 
 
 def main() -> None:
-    keyword, number, img_dir, annotation_path = parse()
     try:
+        keyword, number, img_dir, annotation_path = parse()
         download_images(keyword, number, img_dir)
         create_annotation(img_dir, annotation_path)
         img_iterator = Iterator(annotation_path)
