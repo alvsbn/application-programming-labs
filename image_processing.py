@@ -12,7 +12,7 @@ def load_image(img_path: str) -> np.ndarray:
     """
     img = cv2.imread(img_path)
     if img is None:
-        raise FileNotFoundError(f"Failed to upload image.")
+        raise FileNotFoundError("Failed to upload image.")
     return img
 
 
@@ -67,10 +67,10 @@ def create_binary_image(img: np.ndarray) -> np.ndarray:
     return b_img
 
 
-def save_binary_image(binary_image_path: str, binary_img: np.ndarray) -> None:
+def save_image(image_path: str, img: np.ndarray) -> None:
     """
     Сохраняет бинарное изображение.
-    :param binary_image_path: путь для сохранения бинарного изображения
-    :param binary_img: бинарное изображение
+    :param image_path: путь для сохранения бинарного изображения
+    :param img: бинарное изображение
     """
-    cv2.imwrite(binary_image_path, binary_img)
+    cv2.imwrite(image_path, img)

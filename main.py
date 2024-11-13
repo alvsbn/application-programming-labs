@@ -3,7 +3,7 @@ import argparse
 import cv2
 
 from image_processing import load_image, get_image_size, create_histogram, plot_histogram, create_binary_image, \
-    save_binary_image
+    save_image
 
 
 def parse() -> tuple[str, str]:
@@ -36,7 +36,7 @@ def main() -> None:
         cv2.imshow("Binary image", binary_image)
         cv2.waitKey(0)
 
-        save_binary_image(binary_image_path, binary_image)
+        save_image(binary_image_path, binary_image)
 
     except Exception as e:
         print(e)
