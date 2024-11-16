@@ -69,8 +69,8 @@ def create_binary_image(img: np.ndarray) -> np.ndarray:
 
 def save_image(image_path: str, img: np.ndarray) -> None:
     """
-    Сохраняет бинарное изображение.
-    :param image_path: путь для сохранения бинарного изображения
-    :param img: бинарное изображение
+    Сохраняет изображение.
+    :param image_path: путь для сохранения изображения
+    :param img: изображение
     """
     cv2.imwrite(image_path, img)
