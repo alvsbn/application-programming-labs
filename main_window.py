@@ -1,0 +1,73 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QPushButton, QVBoxLayout, QFileDialog, QMessageBox
+
+from iterator import Iterator
+
+class Window(QMainWindow):
+    def __init__(self):
+        """
+        Конструктор
+        """
+        super().__init__()
+
+        self.setWindowTitle('Просмотр датасета')
+        self.setGeometry(300, 250, 800,500)
+
+        self.image_label = QLabel(self)
+        self.image_label.setAlignment(Qt.AlignCenter)
+
+        self.open_button = QPushButton('dataset folder', self)
+        self.open_button.clicked.connect(self.open_folder)
+
+        self.next_button = QPushButton('next', self)
+        self.next_button.clicked.connect(self.next_image)
+        self.next_button.setEnabled(False)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.image_label)
+        layout.addWidget(self.next_button)
+        layout.addWidget(self.open_button)
+
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
+
+        self.iterator = None
+        self.current_image = None
+
+    def show_image(self)-> None:
+        """
+        Отображает текущее изображение
+        """
+        pixmap = QPixmap(self.current_image)
+        pixmap = pixmap.scaled(400, 400, Qt.KeepAspectRatio)
+        self.image_label.setPixmap(pixmap)
+
+    def next_image(self) -> None:
+        """
+        Отображает следующее изображение
+        :return:
+        """
+        try:
+            self.current_image = next(self.iterator)
+            self.show_image()
+        except StopIteration:
+            QMessageBox.warning(self, 'Error', 'No more images')
+            self.next_button.setEnabled(False)
+
+    def open_folder(self) -> None:
+        """
+        Открывает диалог выбора файла
+        :return:
+        """
+        file_path, _ = QFileDialog.getOpenFileName(self, "Select file", "", "CSV Files (*.csv)")
+        if file_path:
+            self.iterator = Iterator(file_path)
+            try:
+                self.current_image = next(self.iterator)
+                self.show_image()
+                self.next_button.setEnabled(True)
+            except StopIteration:
+                QMessageBox.warning(self, 'Error', 'No images in dataset')
+                self.next_button.setEnabled(False)
