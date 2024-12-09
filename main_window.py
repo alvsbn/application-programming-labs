@@ -47,7 +47,6 @@ class Window(QMainWindow):
     def next_image(self) -> None:
         """
         Отображает следующее изображение
-        :return:
         """
         try:
             self.current_image = next(self.iterator)
@@ -59,7 +58,6 @@ class Window(QMainWindow):
     def open_folder(self) -> None:
         """
         Открывает диалог выбора файла
-        :return:
         """
         file_path, _ = QFileDialog.getOpenFileName(self, "Select file", "", "CSV Files (*.csv)")
         if file_path:
